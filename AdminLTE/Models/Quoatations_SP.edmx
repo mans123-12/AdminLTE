@@ -1,0 +1,340 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Quotations2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustomerEmail" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustomerAddress" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustomerPan" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustomerNumber" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeName" Type="varchar" MaxLength="50" />
+          <Property Name="EmployeeEmail" Type="varchar" MaxLength="50" />
+          <Property Name="EmployeeAddress" Type="varchar" MaxLength="50" />
+          <Property Name="EmployeeNumber" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="itemimg">
+          <Key>
+            <PropertyRef Name="Itemid" />
+          </Key>
+          <Property Name="productid" Type="int" Nullable="false" />
+          <Property Name="imgname" Type="varchar(max)" />
+          <Property Name="imgpath" Type="varchar(max)" />
+          <Property Name="Itemid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductPrice">
+          <Key>
+            <PropertyRef Name="PriceId" />
+          </Key>
+          <Property Name="PriceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+          <Property Name="Rate" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductName" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__itemimg__product__36B12243">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="itemimg" Type="Self.itemimg" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="itemimg">
+              <PropertyRef Name="productid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductPr__Produ__286302EC">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="ProductPrice" Type="Self.ProductPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductPrice">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="Deletemul_images" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Productid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Item_Rec_Mod" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Productid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Product_cRud" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Productid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="StartDate_Lead" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="product" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="Quotations2ModelStoreContainer">
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="itemimg" EntityType="Self.itemimg" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductPrice" EntityType="Self.ProductPrice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__itemimg__product__36B12243" Association="Self.FK__itemimg__product__36B12243">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="itemimg" EntitySet="itemimg" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductPr__Produ__286302EC" Association="Self.FK__ProductPr__Produ__286302EC">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductPrice" EntitySet="ProductPrice" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Quotations2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustomerEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustomerAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustomerPan" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustomerNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="itemimg">
+          <Key>
+            <PropertyRef Name="Itemid" />
+          </Key>
+          <Property Name="productid" Type="Int32" Nullable="false" />
+          <Property Name="imgname" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="imgpath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Itemid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__itemimg__product__36B12243" FromRole="itemimg" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="ProductPrice">
+          <Key>
+            <PropertyRef Name="PriceId" />
+          </Key>
+          <Property Name="PriceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Rate" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__ProductPr__Produ__286302EC" FromRole="ProductPrice" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="itemimg" Relationship="Self.FK__itemimg__product__36B12243" FromRole="Products" ToRole="itemimg" />
+          <NavigationProperty Name="ProductPrice" Relationship="Self.FK__ProductPr__Produ__286302EC" FromRole="Products" ToRole="ProductPrice" />
+        </EntityType>
+        <Association Name="FK__itemimg__product__36B12243">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="itemimg" Type="Self.itemimg" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="itemimg">
+              <PropertyRef Name="productid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductPr__Produ__286302EC">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="ProductPrice" Type="Self.ProductPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductPrice">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Quotations2Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="Self.Customers" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="itemimg" EntityType="Self.itemimg" />
+          <EntitySet Name="ProductPrice" EntityType="Self.ProductPrice" />
+          <EntitySet Name="Products" EntityType="Self.Products" />
+          <AssociationSet Name="FK__itemimg__product__36B12243" Association="Self.FK__itemimg__product__36B12243">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="itemimg" EntitySet="itemimg" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductPr__Produ__286302EC" Association="Self.FK__ProductPr__Produ__286302EC">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductPrice" EntitySet="ProductPrice" />
+          </AssociationSet>
+          <FunctionImport Name="Product_cRud" ReturnType="Collection(Quotations2Model.Product_cRud_Result)">
+          <Parameter Name="Productid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Deletemul_images">
+          <Parameter Name="Productid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Item_Rec_Mod" ReturnType="Collection(Quotations2Model.Item_Rec_Mod_Result)">
+          <Parameter Name="Productid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="StartDate_Lead" ReturnType="Collection(Quotations2Model.StartDate_Lead_Result)">
+            <Parameter Name="product" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="Product_cRud_Result">
+          <Property Type="Int32" Name="productid" Nullable="false" />
+          <Property Type="String" Name="imgname" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="imgpath" Nullable="true" />
+          <Property Type="Int32" Name="Itemid" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="Item_Rec_Mod_Result">
+          <Property Type="Int32" Name="PriceId" Nullable="false" />
+          <Property Type="Int32" Name="ProductId" Nullable="false" />
+          <Property Type="DateTime" Name="StartDate" Nullable="false" />
+          <Property Type="DateTime" Name="EndDate" Nullable="false" />
+          <Property Type="Decimal" Name="Rate" Nullable="false" Precision="18" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="StartDate_Lead_Result">
+          <Property Type="Int32" Name="PriceId" Nullable="false" />
+          <Property Type="Int32" Name="Next_Price" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Quotations2ModelStoreContainer" CdmEntityContainer="Quotations2Entities1">
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="Quotations2Model.Customers">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
+                <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
+                <ScalarProperty Name="CustomerPan" ColumnName="CustomerPan" />
+                <ScalarProperty Name="CustomerNumber" ColumnName="CustomerNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="Quotations2Model.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="EmployeeEmail" ColumnName="EmployeeEmail" />
+                <ScalarProperty Name="EmployeeAddress" ColumnName="EmployeeAddress" />
+                <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="itemimg">
+            <EntityTypeMapping TypeName="Quotations2Model.itemimg">
+              <MappingFragment StoreEntitySet="itemimg">
+                <ScalarProperty Name="productid" ColumnName="productid" />
+                <ScalarProperty Name="imgname" ColumnName="imgname" />
+                <ScalarProperty Name="imgpath" ColumnName="imgpath" />
+                <ScalarProperty Name="Itemid" ColumnName="Itemid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductPrice">
+            <EntityTypeMapping TypeName="Quotations2Model.ProductPrice">
+              <MappingFragment StoreEntitySet="ProductPrice">
+                <ScalarProperty Name="PriceId" ColumnName="PriceId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="Quotations2Model.Products">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Product_cRud" FunctionName="Quotations2Model.Store.Product_cRud">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Quotations2Model.Product_cRud_Result">
+                <ScalarProperty Name="productid" ColumnName="productid" />
+                <ScalarProperty Name="imgname" ColumnName="imgname" />
+                <ScalarProperty Name="imgpath" ColumnName="imgpath" />
+                <ScalarProperty Name="Itemid" ColumnName="Itemid" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Deletemul_images" FunctionName="Quotations2Model.Store.Deletemul_images" />
+          <FunctionImportMapping FunctionImportName="Item_Rec_Mod" FunctionName="Quotations2Model.Store.Item_Rec_Mod">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Quotations2Model.Item_Rec_Mod_Result">
+                <ScalarProperty Name="PriceId" ColumnName="PriceId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="StartDate_Lead" FunctionName="Quotations2Model.Store.StartDate_Lead">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Quotations2Model.StartDate_Lead_Result">
+                <ScalarProperty Name="PriceId" ColumnName="PriceId" />
+                <ScalarProperty Name="Next_Price" ColumnName="Next_Price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

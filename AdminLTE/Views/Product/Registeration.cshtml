@@ -1,0 +1,543 @@
+﻿
+@{
+    ViewBag.Title = "Registeration";
+}
+
+@section header{
+
+    Registeration
+}
+@section table{
+    Product
+}
+@section css{
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css" />
+    <link href="~/frontend/plugins/dropzone/basic.css" rel="stylesheet" />
+    <link href="~/frontend/plugins/dropzone/dropzone.css" rel="stylesheet" />
+    <link href="~/frontend/plugins/fontawesome-free/css/all.css" rel="stylesheet" />
+
+}
+@section script{
+    <script src="~/frontend/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/frontend/plugins/dropzone/dropzone.js"></script>
+    <script src="~/AppJS/trial/Product(21).js"></script>
+}
+@section Customer{
+    href="/Customer/CustomerDataTable"
+}
+@section Employee{
+    href="/Employee/DataTable"
+}
+
+<style>
+    .zoom {
+              
+        transition: transform .2s;
+        
+    }
+
+        .zoom:hover {
+            -ms-transform: scale(3.5); /* IE 9 */
+            /*-webkit-transform: scale(1.5);*/ /* Safari 3-8 */
+            transform: scale(3.5);
+        }
+</style>
+
+<!--Add record end-->
+<div class="row" style="justify-content:center;" id="create">
+    <!--Product Db-->
+    <div class="col-md-4">
+        <div class="card card-default">
+
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="prodName">Name</label>
+                    <input type="text" class="form-control" id="prodName" placeholder="Enter product name" required>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card card-default">
+
+            <div class="card-body">
+                <div class="form-group">
+                    <label>UOM</label>
+                    <select class="custom-select" id="uom">
+                        <option>Enter Unit of Measurement</option>
+                        <option>m</option>
+                        <option>cm</option>
+                        <option>feet</option>
+
+                    </select>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card card-default">
+
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="prodlength">Length</label>
+                    <input type="text" class="form-control" id="prodlength" placeholder="Enter Length" required>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card card-default">
+
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="prodbreadth">Breadth</label>
+                    <input type="text" class="form-control" id="prodbreadth" placeholder="Enter Breadth" required>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card card-default">
+
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="prodheight">Height</label>
+                    <input type="text" class="form-control" id="prodheight" placeholder="Enter Height" required>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2 text-center">
+        <div class="row">
+            <div class="glyphicon-upload post ">
+                <button type="button" class="btn btn-primary col " id="empId" onclick="Update()">
+                    <i class="fas fa-upload"></i>
+                    <span>Save</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--Product Db-->
+    <!--Image Db-->
+    <!--<div class="col-md-8">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Product Image</h3>
+            </div>
+            <div class="card-body mb-5">
+                <div id="actions" class="row ">
+                    <div class="col-lg-6">
+                        <div class="btn-group w-100">
+                            <button type="button" class="btn btn-success col fileinput-button">
+                                <i class="fas fa-plus"></i>
+                                <span>Add Files</span>
+                            </button>
+                            <button type="reset" class="btn btn-warning col cancel">
+                                <i class="fas fa-times-circle"></i>
+                                <span>Cancel upload</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 d-flex align-items-center">
+                        <div class="fileupload-process w-100">
+                            <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table table-striped files  " id="previews">
+                    <div id="template" class="row mt-2">
+                        <div class="col-auto">
+                            <span class="preview"><img src="data:," alt="" data-dz-thumbnail /></span>
+                        </div>
+                        <div class="col d-flex align-items-center">
+                            <p class="mb-0">
+                                <span class="lead" data-dz-name></span>
+                                (<span data-dz-size></span>)
+                            </p>
+                            <strong class="error text-danger" data-dz-errormessage></strong>
+                        </div>
+                        <div class="col-4 d-flex align-items-center">
+                            <div class="progress progress-striped active w-100" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                            </div>
+                        </div>
+                        <div class="col-auto d-flex align-items-center">
+                            <div class="btn-group">
+                                <button class="btn btn-primary start">
+                                    <i class="fas fa-upload"></i>
+                                    <span>Start</span>
+                                </button>
+                                <button data-dz-remove class="btn btn-warning cancel">
+                                    <i class="fas fa-times-circle"></i>
+                                    <span>Cancel</span>
+                                </button>
+                                <button data-dz-remove class="btn btn-danger delete">
+                                    <i class="fas fa-trash"></i>
+                                    <span>Delete</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+    <!-- /.card-body -->
+    <!--</div>-->
+    <!-- /.card -->
+    <!--</div>
+    <div class="col-md-2">
+        <div class="row">
+            <div class="glyphicon-upload post">
+                <button type="submit" class="btn btn-primary col " id="submit">
+                    <i class="fas fa-upload"></i>
+                    <span> Upload</span>
+                </button>
+            </div>
+        </div>
+    </div>-->
+    <!--Image Db-->
+</div>
+<!--Add record end-->
+<!--Start Display-->
+<div class="row mt-5">
+
+
+    <!--Product table-->
+    <div class="col-12">
+        <div id="tabledata_wrapper" class="dataTables_wrapper dt-bootstrap4">
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-hover table-bordered" id="proddata">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Product table-->
+    <!--Img table-->
+    <div class="col-12">
+        <div class="modal fade" id="imgdrag">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Image Table</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div id="mercy" class="row ">
+                            <div class="col-lg-6">
+                                <div class="btn-group w-100">
+                                    <button type="button" class="btn btn-success col filemodal-button">
+                                        <i class="fas fa-plus"></i>
+                                        <span>Add Files</span>
+                                    </button>
+                                    <button type="reset" class="btn btn-warning col cancel">
+                                        <i class="fas fa-times-circle"></i>
+                                        <span>Cancel upload</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-center">
+                                <div class="fileupload-process w-100">
+                                    <div id="total-modal-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                        <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table table-striped files  " id="gay">
+                            <div id="Hide" class="row mt-2">
+                                <div class="col-auto">
+                                    <span class="preview"><img src="data:," alt="" data-dz-thumbnail /></span>
+                                </div>
+                                <div class="col d-flex align-items-center">
+                                    <p class="mb-0">
+                                        <span class="lead" data-dz-name></span>
+                                        (<span data-dz-size></span>)
+                                    </p>
+                                    <strong class="error text-danger" data-dz-errormessage></strong>
+                                </div>
+                                <div class="col-4 d-flex align-items-center">
+                                    <div class="progress progress-striped active w-100" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                        <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                    </div>
+                                </div>
+                                <div class="col-auto d-flex align-items-center">
+                                    <div class="btn-group">
+                                        <button data-dz-remove class="btn btn-warning cancel">
+                                            <i class="fas fa-times-circle"></i>
+                                            <span>Cancel</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tabledata_wrapper" class="dataTables_wrapper dt-bootstrap4">
+
+                            <table class="table table-hover table-bordered" id="imgdata" style="width:100%">
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="Addimg">Add image</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+        </div>
+    </div>
+
+
+    <!--Img table-->
+    <!--Price Table-->
+    <div class="col-12">
+        <div class="modal fade" id="pricedrag">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Price Table</h4>
+                        <button type="button" class="close" onclick="Refresh()" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-12"> 
+                            <div class="card   card-primary " >
+                                <div class="card-header">
+                                    <h3 class="card-title">Add new</h3>
+
+                                    
+                                    <!-- /.card-tools -->
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Start Date:</label>                                                
+                                                <input type="text" class="form-control" id="entrydate">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>End Date:</label>
+                                                <input type="text" class="form-control" id="enddate">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Rate:</label>
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="fas fa-dollar-sign"></i>
+                                                    </span>
+                                                    <input type="text" class="form-control" id="prodRate" placeholder="Enter Rate">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <button type="button" class="btn btn-primary" id="product" onclick="Addprice()">Save</button>
+                                            <input type="text" id="price" style="visibility:hidden">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                        </div>
+
+                        <!-- /.card -->
+
+                        <div id="tabledata_wrapper" class="dataTables_wrapper dt-bootstrap4">
+
+                            <table class="table table-hover table-bordered" id="pricedata" style="width:100%">
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+        </div>
+    </div>
+    <!--Price Table-->
+
+</div>
+
+<!--Modals////////////////////////////////////////////////////-->
+<!--Edit prod record-->
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Details</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="Prodid">Product Id</label>
+                    <input type="text" class="form-control" id="Prodid">
+                </div>
+                <div class="form-group">
+                    <label for="Prodname">Name</label>
+                    <input type="text" class="form-control" id="Prodname" placeholder="Enter product">
+                </div>
+
+                <div class="form-group">
+                    <label>UOM</label>
+                    <select class="custom-select" id="uom">
+                        <option>Enter Unit of Measurement</option>
+                        <option>m</option>
+                        <option>cm</option>
+                        <option>feet</option>
+
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Prodname">Length</label>
+                    <input type="text" class="form-control" id="Prodlength" >
+                </div>
+                <div class="form-group">
+                    <label for="Prodname">Breadth</label>
+                    <input type="text" class="form-control" id="Prodbreadth" >
+                </div>
+                <div class="form-group">
+                    <label for="Prodname">Height</label>
+                    <input type="text" class="form-control" id="Prodheight" >
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="editprod">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!--Edit prod record-->
+<!--Edit img record-->
+<div class="modal fade" id="editmodal">
+    <div class="modal-dialog modal-lg" id="editdrag">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="editShow" class="row ">
+                    <div class="col-lg-6">
+                        <div class="btn-group w-100">
+                            <button type="button" class="btn btn-success col editmodal-button">
+                                <i class="fas fa-plus"></i>
+                                <span>Add Files</span>
+                            </button>
+                            <button type="reset" class="btn btn-warning col cancel">
+                                <i class="fas fa-times-circle"></i>
+                                <span>Cancel upload</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 d-flex align-items-center">
+                        <div class="fileupload-process w-100">
+                            <div id="edit-modal-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table table-striped files  " id="edit">
+                    <div id="Show" class="row mt-2">
+                        <div class="col-auto">
+                            <span class="preview"><img src="data:," alt="" data-dz-thumbnail /></span>
+                        </div>
+                        <div class="col d-flex align-items-center">
+                            <p class="mb-0">
+                                <span class="lead" data-dz-name></span>
+                                (<span data-dz-size></span>)
+                            </p>
+                            <strong class="error text-danger" data-dz-errormessage></strong>
+                        </div>
+                        <div class="col-4 d-flex align-items-center">
+                            <div class="progress progress-striped active w-100" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                            </div>
+                        </div>
+                        <div class="col-auto d-flex align-items-center">
+                            <div class="btn-group">
+                                <button data-dz-remove class="btn btn-warning cancel">
+                                    <i class="fas fa-times-circle"></i>
+                                    <span>Cancel</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="editimg">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!--Edit img record-->
+<!--Delete img record-->
+<div class="modal fade" id="deletemodal" role="dialog">
+    <div class="modal-dialog">        
+        <div class="modal-content">
+            <div class="modal-body">
+                <input id="prodId" style="visibility:hidden;" />
+                <h3 class="text-center">Do you want to delete</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="id" onclick="Delete()" data-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Delete img record-->
+<!--Popup image-->
+<div class="modal fade" id="modalenlarge">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src="" style="height:100%;width:100%;" id="inputsrc" />
+
+                <!--<div class="card card-primary">
+        <div class="card-body text-center">
+
+            <img src="" style="height:400px;width:100%;" id="inputsrc" />
+
+
+        </div>-->
+                <!-- /.card-body -->
+                <!--</div>-->
+                <!--<div class="modal-footer justify-content-between">-->
+                @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+                <!--</div>-->
+            </div>
+            <!-- /.modal-content -->
+        </div>
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!--Popup image-->
+<!--End Display-->
+

@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "Registeration";
+}
+
+
+@section header{
+
+    Registeration
+}
+@section table{
+    Employee
+}
+@section script{
+    <script src="~/AppJS/AddEmployee.js"></script>
+}
+
+@section Customer{
+    href="/Customer/CustomerDataTable"
+}
+@section Employee{
+    href="/Employee/DataTable"
+}
+@section Product{
+    href="/Product/Registeration"
+}
+<div class="row" style="justify-content:center;">
+    <div class="col-md-6">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h2 class="card-title">Details</h2>
+
+
+            </div>
+            <form>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="empName">Name</label>
+                        <input type="text" class="form-control" id="empName" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="empEmail">Email</label>
+                        <input type="email" class="form-control" id="empEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="empAddressl">Address</label>
+                        <input type="text" class="form-control" id="empAddress" placeholder="Enter your Address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="empNumber">Mobile No</label>
+                        <input type="text" class="form-control" id="empNumber" placeholder="Enter your number" required>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary" onclick="BtnClick()">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
